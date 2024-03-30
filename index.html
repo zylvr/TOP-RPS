@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+
+        function getComputerChoice() {
+            switch (getRandomInt(3)) {
+                case 0: return "Rock"; break;
+                case 1: return "Paper"; break;
+                case 2: return "Scissors"; break;
+            }
+        }
+    </script>
+</body>
+</html>
