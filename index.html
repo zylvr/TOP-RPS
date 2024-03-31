@@ -90,7 +90,11 @@
                 }
             }
 
-            let outcomeBreakdown = `You had ${winCounter} wins, ${lossCounter} losses, and ${drawCounter} draws.`;
+            let winPlurality = winCounter == 1 ? "win" : "wins";
+            let lossPlurality = lossCounter == 1 ? "loss" : "losses";
+            let drawPlurality = drawCounter == 1 ? "draw" : "draws";
+
+            let outcomeBreakdown = `You had ${winCounter} ${winPlurality}, ${lossCounter} ${lossPlurality}, and ${drawCounter} ${drawPlurality}.`;
 
             if (winCounter > lossCounter) {
                 console.log(`Congratulations! You Won! ${outcomeBreakdown}`);
