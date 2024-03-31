@@ -96,7 +96,7 @@
                 console.log(`Congratulations! You Won! ${outcomeBreakdown}`);
             } else if (lossCounter > winCounter) {
                 console.log(`You Lost :(. ${outcomeBreakdown}`);
-            } else {
+            } else if (winCounter == lossCounter) {
                 console.log(`No winners here.. ${outcomeBreakdown}`);
             }
         }
