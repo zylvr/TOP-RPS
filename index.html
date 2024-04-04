@@ -55,55 +55,78 @@
             }
         }
 
-        function playGame() {
-            let drawCounter = 0;
-            let winCounter = 0;
-            let lossCounter = 0;
+        const rockButton = document.createElement('button');
+        const paperButton = document.createElement('button');
+        const scissorsButton = document.createElement('button');
+        const results = document.createElement('div');
 
-            for (let i = 0; i < 5; i++) { // play 5 rounds
-                let playerSelection;
+        rockButton.setAttribute('id', 'rock');
+        paperButton.setAttribute('id', 'paper');
+        scissorsButton.setAttribute('id', 'scissors');
+        results.setAttribute('id', 'results');
 
-                while (true) {
-                    playerSelection = prompt("Rock, Paper, or Scissors?");
-                    playerSelection = playerSelection.toLowerCase();
-                    if (playerSelection == "rock" || playerSelection == "paper" || playerSelection == "scissors") {
-                        break;
-                    }
-                    alert("Only the values rock, paper, or scissors are allowed.");
-                }
-                
-                let computerSelection = getComputerChoice();
+        rockButton.innerText = 'Rock';
+        paperButton.innerText = 'Paper';
+        scissorsButton.innerText = 'Scissors';
 
-                switch (playRound(playerSelection, computerSelection)) {
-                    case "draw":
-                        console.log("It's a draw!");
-                        drawCounter++;
-                        break;
-                    case "win":
-                        console.log(`You Won! ${capitalizeFirstLetter(playerSelection)} beats ${capitalizeFirstLetter(computerSelection)}`);
-                        winCounter++;
-                        break;
-                    case "loss":
-                        console.log(`You Lost! ${capitalizeFirstLetter(computerSelection)} beats ${capitalizeFirstLetter(playerSelection)}`);
-                        lossCounter++;
-                        break;
-                }
+        document.body.appendChild(rockButton);
+        document.body.appendChild(paperButton);
+        document.body.appendChild(scissorsButton);
+        document.body.appendChild(results);
+
+
+
+        let roundsToPlay = 5;
+        let roundCounter = 0;
+        let drawCounter = 0;
+        let winCounter = 0;
+        let lossCounter = 0;
+
+
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(button => button.addEventListener('click', () => {
+            let playerSelection = capitalizeFirstLetter(button.id);
+            let computerSelection = getComputerChoice();
+            let finalOutcome = '';
+
+            switch (playRound(playerSelection, computerSelection)) {
+                case "draw":
+                    drawCounter++;
+                    break;
+                case "win":
+                    winCounter++;
+                    break;
+                case "loss":
+                    lossCounter++;
+                    break;
             }
 
-            let winPlurality = winCounter == 1 ? "win" : "wins";
-            let lossPlurality = lossCounter == 1 ? "loss" : "losses";
-            let drawPlurality = drawCounter == 1 ? "draw" : "draws";
+            roundCounter++;
 
-            let outcomeBreakdown = `You had ${winCounter} ${winPlurality}, ${lossCounter} ${lossPlurality}, and ${drawCounter} ${drawPlurality}.`;
+            results.innerText = `
+            You chose \xa0-->\xa0 ${playerSelection} \xa0\xa0|\xa0\xa0 ${computerSelection} \xa0<--\xa0 Computer chose
+            
+            Draws: ${drawCounter}, Wins: ${winCounter}, Losses: ${lossCounter}
 
-            if (winCounter > lossCounter) {
-                console.log(`Congratulations! You Won! ${outcomeBreakdown}`);
-            } else if (lossCounter > winCounter) {
-                console.log(`You Lost :(. ${outcomeBreakdown}`);
-            } else if (winCounter == lossCounter) {
-                console.log(`No winners here.. ${outcomeBreakdown}`);
+            `;
+
+            if (roundCounter == roundsToPlay) {
+                if (winCounter > lossCounter) {
+                    finalOutcome = document.createTextNode('Congratulations! You Won!');
+                } else if (lossCounter > winCounter) {
+                    finalOutcome = document.createTextNode('You Lost :(');
+                } else if (winCounter == lossCounter) {
+                    finalOutcome = document.createTextNode('No winners here..');
+                }
+
+                results.appendChild(finalOutcome);
+
+                roundCounter = 0;
+                drawCounter = 0;
+                winCounter = 0;
+                lossCounter = 0;
             }
-        }
+        }));
     </script>
 </body>
 </html>
